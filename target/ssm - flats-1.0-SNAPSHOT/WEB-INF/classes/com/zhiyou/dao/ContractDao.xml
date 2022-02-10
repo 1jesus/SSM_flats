@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.dao.ContractDao">
+    <select id="contractList" resultType="Contract">
+        select * from contract
+        <where>
+            <if test="field != null and field.trim() != '' ">
+                ${field} like '%' #{keyWord} '%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.dao.HouseDao">
+    <!--    &lt;!&ndash;查询全部 + 分页 + 模糊&ndash;&gt;-->
+    <!--    <select id="houseList" resultType="House" parameterType="House">/*parameterType="House"*/-->
+    <!--        select * from house-->
+    <!--        <where>-->
+    <!--            <if test="haddress != null and haddress.trim() != '' ">-->
+    <!--                haddress like concat("%",#{keyword},"%")-->
+    <!--            </if>-->
+    <!--            <if test="hdir != null and hdir.trim() != '' ">-->
+    <!--                hdir like concat("%",#{keyword},"%")-->
+    <!--            </if>-->
+    <!--        </where>-->
+
+    <!--                <where>-->
+    <!--                    <if test="haddress != null and haddress.trim() != '' ">-->
+    <!--                        haddress like "%" #{keyword} "%"-->
+    <!--                    </if>-->
+    <!--                    <if test="hdir != null and hdir.trim() != '' ">-->
+    <!--                        hdir like "%" #{keyword} "%"-->
+    <!--                    </if>-->
+    <!--                </where>-->
+    <!--    </select>-->
+
+    <select id="houseList" resultType="House">
+        select * from house
+        <where>
+            <if test="field != null and field.trim() != '' ">
+                ${field} like '%' #{keyWord} '%'
+            </if>
+        </where>
+    </select>
+    <!--
+                <if test="param2 != null and param2.trim() != '' ">
+                    haddress like '%' #{keyWord} '%'
+                </if>
+    -->
+
+    <insert id="addHouse" parameterType="House">
+        insert into house (haddress,hfloor,hroomNum,harea,hdir,hdeco,hair,hprice,hrentStatus,himage) values(#{haddress},#{hfloor},#{hroomNum},#{harea},#{hdir},#{hdeco},#{hair},#{hprice},#{hrentStatus},#{himage})
+    </insert>
+
+    <select id="detailHouse" parameterType="java.lang.Integer" resultType="House">
+        select * from house where hid=#{hid}
+    </select>
+
+    <delete id="deleteHouse" parameterType="java.lang.Integer">
+        delete from house where hid=#{hid}
+    </delete>
+
+    <select id="findHouseById" parameterType="java.lang.Integer" resultType="House">
+        select * from house where hid=#{hid}
+    </select>
+
+    <update id="updateHouse" parameterType="House">
+        update house set haddress=#{haddress}, hfloor=#{hfloor}, hroomNum=#{hroomNum}, harea=#{harea}, hdir=#{hdir}, hdeco=#{hdeco}, hair=#{hair}, hprice=#{hprice}, hrentStatus=#{hrentStatus},himage=#{himage} where hid=#{hid}
+    </update>
+
+    <!--查询全部 + 分页 + 模糊-->
+    <select id="getAllByField" resultType="House">
+        select * from house
+        <where>
+            <if test="param2 != null and param2.trim() != '' ">
+                haddress like '%' #{keyWord} '%'
+            </if>
+        </where>
+    </select>
+
+</mapper>
